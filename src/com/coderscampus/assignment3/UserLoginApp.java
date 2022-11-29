@@ -6,7 +6,9 @@ public class UserLoginApp {
 
 	public static void main(String[] args) {
 		
-		UserService.login();
+		
+		UserService userService = new UserService();
+		userService.login();
 
 	}
 

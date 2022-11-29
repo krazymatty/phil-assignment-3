@@ -9,14 +9,14 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class UserService {
-	public static Integer userAttempts = 0;
-	public static String username = null;
-	public static String password = null;
-	public static String name = null;
-	public static String[] userArray = null;
-	public static Boolean userAuth = null;
+	public  Integer userAttempts = 0;
+	public  String username = null;
+	public  String password = null;
+	public  String name = null;
+	public  String[] userArray = null;
+	public  Boolean userAuth = null;
 
-	public static void login() {
+	public void login() {
 		if (userAttempts < 5) {
 			try (Scanner scan = new Scanner(System.in)) {
 				if (userAttempts == 0) {
@@ -38,16 +38,18 @@ public class UserService {
 
 	}
 
-	private static void getUsers() {
+	private void getUsers() {
 		String line = null;
+		User user = null;
 		try (BufferedReader fileReader = new BufferedReader(new FileReader("data.txt"))) {
 
 			while ((line = fileReader.readLine()) != null) {
 				userArray = parseText(line);
-				createUser(userArray[0].toString(), userArray[1].toString(), userArray[2].toString());
+				
+				user = createUser(userArray[0].toString(), userArray[1].toString(), userArray[2].toString());
 
-				String theUsername = User.getUsername();
-				String thePassword = User.getPassword();
+				String theUsername = user.getUsername();
+				String thePassword = user.getPassword();
 
 				if (username.equals(theUsername.toLowerCase()) && password.equals(thePassword)) {
 					userAuth = true;
@@ -56,7 +58,7 @@ public class UserService {
 			}
 			fileReader.close();
 			if (userAuth != null) {
-				String theName = User.getName();
+				String theName = user.getName();
 				name = Arrays.stream(theName.split("\\s+")).map(t -> t.substring(0, 1).toUpperCase() + t.substring(1))
 						.collect(Collectors.joining(" "));
 				System.out.println("Welcome: " + name);
@@ -76,22 +78,20 @@ public class UserService {
 
 	}
 
-	public static String[] parseText(String fileInput) {
+	public String[] parseText(String fileInput) {
 		String[] userArray = fileInput.split(",");
 
 		return userArray;
 	}
 
-	public static User createUser(String username, String password, String name) {
-		User user = new User();
-		User.setUsername(username);
-		User.setPassword(password);
-		User.setName(name);
+	public User createUser(String username, String password, String name) {
+		User user = new User(username, password, name);
+
 		return user;
 
 	}
 
-	private static void failedAttempts() {
+	private void failedAttempts() {
 
 		System.out.println("You have too many failed login attempts: Your account is locked!");
 	}
