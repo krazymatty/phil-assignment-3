@@ -45,8 +45,11 @@ public class UserService {
 
 			while ((line = fileReader.readLine()) != null) {
 				userArray = parseText(line);
+				String usernameArray = userArray[0].toString();
+				String passwordArray = userArray[1].toString();
+				String nameArray = userArray[2].toString();
 				
-				user = createUser(userArray[0].toString(), userArray[1].toString(), userArray[2].toString());
+				user = createUser(usernameArray, passwordArray, nameArray);
 
 				String theUsername = user.getUsername();
 				String thePassword = user.getPassword();
