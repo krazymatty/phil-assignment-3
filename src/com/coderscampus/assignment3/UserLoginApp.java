@@ -9,7 +9,7 @@ public class UserLoginApp {
 		
 		
 		UserService userService = new UserService();
-		userService.login();
+		userService.initialLogin();
 
 	}
 
